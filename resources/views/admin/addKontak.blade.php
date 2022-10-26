@@ -28,13 +28,13 @@
                             <div class="form-group">
                                 <label for="id_jns">Jenis Kontak</label>
                                 <select type="multiple" class="form-control form-select" id="id_jns" name="id_jns" required>
-                                    @foreach($data as $item )
-                                    <option value="{{$item->id}}" selected>{{$item->jenis}}</option>
+                                    @foreach($data as $item)
+                                    <option value="{{$item->id}}">{{$item->jenis}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="hidden" class="form-control form-select" id="id_siswa" name="id_siswa" value="{{$data->id}}" required>
+                                <input type="hidden" class="form-control form-select" id="id_siswa" name="id_siswa" value="{{$siswa->id}}" required>
                                 </input>
                             </div>
                             <div class="form-group">

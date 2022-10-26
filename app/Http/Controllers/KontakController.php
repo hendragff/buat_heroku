@@ -16,9 +16,8 @@ class KontakController extends Controller
      */
     public function index()
     {
-        $data1 = Siswa::all();
-        $data = Kontak::all();
-        return view('admin.masterkontak', compact('data', 'data1'));
+        $data1 = Siswa::all('id','nisn', 'nama');
+        return view('admin.masterkontak', compact('data1'));
     }
 
     /**
@@ -26,13 +25,11 @@ class KontakController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
         $data = Jns_siswa::all();
-        $data1 = Siswa::find($id);
-        return view('admin.addKontak', compact('data', 'data1'));
+        return view('admin.addKontak', compact('data'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -72,7 +69,7 @@ class KontakController extends Controller
      */
     public function show($id)
     {
-        $data = Siswa::where('id',$id)->with('kontak')->get();
+        $data = Siswa::find($id)->kontak()->get();
         return view('admin.showKontak', compact('data'));
     }
 
@@ -84,8 +81,10 @@ class KontakController extends Controller
      */
     public function edit($id)
     {
-
-        return view('admin.editKontak');
+        $data = Jns_siswa::all();
+        $kontak = Kontak::find($id);
+        return view('admin.editKontak', compact('data', 'kontak'));
+        
     }
 
     /**
@@ -97,7 +96,26 @@ class KontakController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+        $message =[
+            'required' => ':atribut harus diisi dulu lur',
+            'min' => ':atribut minimal :min karakter cak!',
+            'max' => ':atribut maksimal :max karakter gaes',
+            'numeric' => ':atribut harus pake nomer bang',
+            'mimes' => ':atribut harus bertipe jpg,png,jpeg',
+            'size' => 'file yang diupload maksimal :size'
+        ];
+        $this->validate($request,[
+            'desc_kntk' => 'required',
+            'id_jns' => 'required'
+        ],$message);
+        // insert db
+        Kontak::find($id)->update([
+            'desc_kntk' => $request->desc_kntk,
+            'id_jns' => $request->id_jns
+        ]);
+
+        return redirect('/masterkontak');
     }
 
     /**
@@ -111,15 +129,18 @@ class KontakController extends Controller
         $data = Kontak::destroy($id);
         return redirect('/masterkontak');
     }
+    
     public function tambah($id)
     {
-        $data = Siswa::find($id);
-        return view('admin.addKontak', compact('data'));
+        // dd($id);
+        $data = Jns_siswa::all();
+        $siswa = Siswa::find($id);
+        return view('admin.addKontak', compact('siswa', 'data'));
     }
 
-    // public function hapus($id)
-    // {
-    //     $data = Kontak::destroy($id);
-    //     return redirect('/masterproject');
-    // }
+    public function hapus($id)
+    {
+        $data = Kontak::destroy($id);
+        return redirect('/masterkontak');
+    }
 }

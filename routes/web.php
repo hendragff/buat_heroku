@@ -38,7 +38,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/masterkontak/create/{id}',[KontakController::class, 'tambah'] )->name('tambah-kontak');
     Route::get('/mastersiswa/{id_siswa}/hapus',[SiswaController::class,'hapus'])->name('mastersiswa.hapus');
     Route::get('/masterproject/{id_project}/hapus',[ProjectController::class,'hapus'])->name('masterproject.hapus');
-    // Route::get('/masterkontak/{id_kntk}/hapus',[KontakController::class,'hapus'])->name('masterkontak.hapus');
+    Route::get('/masterkontak/{id}/edit',[KontakController::class,'edit']);
+    // Route::get('/masterkontak/create/{id_siswa}',[KontakController::class,'add'])->name('tambah-kontak');
+    Route::get('/masterkontak/{id_kntk}/hapus',[KontakController::class,'hapus'])->name('masterkontak.hapus');
 });
 // route guest
 Route::middleware('guest')->group(function(){

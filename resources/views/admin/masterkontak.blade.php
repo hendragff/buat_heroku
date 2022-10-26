@@ -20,18 +20,13 @@
                             </thead>
                             <tbody>
                                 <?php //$i = 1; ?>
-                                @foreach($data as $i => $item)
+                                @foreach($data1 as $i => $siswa)
                                 <tr>
                                     <th scope="row">{{++$i}}</th>
-                                    <td scope="row">{{$item->siswa->nama}}</td>
+                                    <td scope="row">{{$siswa->nama}}</td>
                                     <td>
-                                    <a href="" onclick="show({{$item->id}}, event)" class="btn btn-info btn-circle btn-sm"><i class="fas fa-folder-open"></i></a>
-                                        <form method="post" action="{{route('masterkontak.destroy', $item->id)}}">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit"  class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                        <a href="{{route('tambah-kontak', $item->id)}}" class="btn btn-success btn-circle btn-sm btn-success btn-circle"><bold>+</bold></a>
+                                    <a href="" onclick="show({{$siswa->id}}, event)" class="btn btn-info btn-circle btn-sm"><i class="fas fa-folder-open"></i></a>
+                                        <a href="{{route('tambah-kontak', $siswa->id)}}" class="btn btn-success btn-circle btn-sm btn-success btn-circle"><bold>+</bold></a>
                                     </td>
                                 </tr>
                                 @endforeach
